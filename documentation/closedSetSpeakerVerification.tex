@@ -16,7 +16,7 @@
 
 \author{
   Basant Mahgoub (20180162), Omar Emara (20180364), Hamza Mahmoud(20180214) \\
-  Tarik Zaki (20180300), Habiba Yasser (20180188), Mohamed Alkhateb (20180470) \\
+  Tarek Zaki (20180300), Habiba Yasser (20180188), Mohamed Alkhateb (20180470) \\
   Karim Ashraf (20180424), Mohamed AbdAllah (20180517)
 }
 
@@ -240,7 +240,16 @@ of 3 epochs. Finally, a 5-fold cross validation was conducted to assess the
 generalization of the model, the results of which are presented in
 \Fref{sec:Results}.
 
-\subsection{Support Vector Machines}
+\subsection{Support Vector Machine}
+
+A Support Vector Machine (SVM) model was constructed using a Radial Basis
+Function (RBF) kernel with a distance scale of $(n \cdot v)^{-1}$ where $n$ is
+the number of features and $v$ is the variance of the features. The model was
+regularized with a squared L2 regularization penalty and fitted using uniform
+weights. Even though the dataset is unbalanced, the decision to use uniform
+weights was decided experimentally. Finally, a 5-fold cross validation was
+conducted to assess the generalization of the model, the results of which are
+presented in \Fref{sec:Results}.
 
 \section{Results}
 \label{sec:Results}
@@ -305,8 +314,55 @@ Negative & 2 & 487 \\
 \label{fig:NeuralNetworkLoss}
 \end{figure}
 
+\subsection{Support Vector Machine}
+
+With 5-fold cross validation, the average binary accuracy was 99.3\%. The cross
+validation split corresponding to the median validation binary accuracy was
+chosen to evaluate the model on multiple metrics as follows. The binary
+confusion matrix is shown in \Fref{tab:SupportVectorMachineConfusionMatrix} and
+the binary ROC curve is shown in \Fref{fig:SupportVectorMachineROC}.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+& Positive & Negative \\
+\midrule
+Positive & 105 & 2 \\
+Negative & 2 & 491 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\caption{The support vector machine binary confusion matrix for the cross
+  validation split corresponding to the median validation binary accuracy.}
+\label{tab:SupportVectorMachineConfusionMatrix}
+\end{table}
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+  \begin{axis}[
+    title = ROC Curve,
+    xlabel = False Positive Rate,
+    ylabel = True Positive Rate,
+  ]
+    \addplot table[x = falsePositiveRate, y = truePositiveRate]
+      {supportVectorMachineROC.data};
+  \end{axis}
+\end{tikzpicture}
+\end{center}
+\caption{The support vector machine binary ROC curve for the cross validation
+  split corresponding to the median validation binary accuracy.}
+\label{fig:SupportVectorMachineROC}
+\end{figure}
+
 \section{Conclusion}
 \label{sec:Conclusion}
+
+A comparative analysis of the results reveals that the SVM implementation
+provides a higher predictive accuracy than the neural network implementation,
+while at the same time being less computationally expensive and faster to train
+and evaluate.
 
 \printbibliography
 
